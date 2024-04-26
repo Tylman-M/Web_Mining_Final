@@ -1,14 +1,37 @@
 import pandas as pd, numpy as np, tensorflow as tf,  keras_nlp as nlp, keras
+from sklearn.model_selection import train_test_split
 
 
-#|%%--%%| <PugefRXIFZ|q2I0VyEDs3>
+#|%%--%%| <PugefRXIFZ|S3vlxen8zo>
+#Generate split
+generate_split = False
+dev = True
+if generate_split:
+    df = pd.read_csv('./data/en-fr.csv', encoding='latin-1')
+    train, test = train_test_split(df, test_size=0.2)
+    train, test = pd.DataFrame(train), pd.DataFrame(test) #My LSP is bugged, this shut up the warnings
+    train.to_csv('./data/train.csv', index=False)
+    train.iloc[:10000].to_csv('./data/smol_train.csv', index=False)
+    test.to_csv('./data/test.csv', index=False)
+    test.iloc[:1000].to_csv('./data/smol_test.csv', index=False)
+    if dev:
+        train = train.iloc[:10000]
+        test = test.iloc[:1000]
+else:
+    if dev:
+        train = pd.read_csv('./data/smol_train.csv', encoding='latin-1')
+        test = pd.read_csv('./data/smol_test.csv', encoding='latin-1')
+    else:
+        train = pd.read_csv('./data/train.csv', encoding='latin-1')
+        test = pd.read_csv('./data/test.csv', encoding='latin-1')
+print(train.shape, test.shape)
+print(train.head())
+print(test.head())
 
-#df = pd.read_csv('./data/en-fr.csv')
-#df.head()
+#|%%--%%| <S3vlxen8zo|KqiTcyJspM>
 
 
-#|%%--%%| <q2I0VyEDs3|pK2JFKStii>
-
+#|%%--%%| <KqiTcyJspM|pK2JFKStii>
 
 #|%%--%%| <pK2JFKStii|t0TkHKeH9E>
 # Examples from kerasnlp
